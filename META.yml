@@ -23,7 +23,7 @@ resources:
   bugtracker: https://rt.cpan.org/Public/Dist/Display.html?Name=Getopt-Long-Util
   homepage: https://metacpan.org/release/Getopt-Long-Util
   repository: git://github.com/sharyanto/perl-Getopt-Long-Util.git
-version: '0.72'
+version: '0.73'
 x_Dist_Zilla:
   perl:
     version: '5.018001'

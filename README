@@ -2,7 +2,7 @@ NAME
     Getopt::Long::Util - Utilities for Getopt::Long
 
 VERSION
-    This document describes version 0.72 of Getopt::Long::Util (from Perl
+    This document describes version 0.73 of Getopt::Long::Util (from Perl
     distribution Getopt-Long-Util), released on 2014-07-09.
 
 FUNCTIONS
