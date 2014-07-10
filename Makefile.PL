@@ -20,14 +20,16 @@ my %WriteMakefileArgs = (
   "EXE_FILES" => [],
   "LICENSE" => "perl",
   "NAME" => "Getopt::Long::Util",
-  "PREREQ_PM" => {},
+  "PREREQ_PM" => {
+    "experimental" => 0
+  },
   "TEST_REQUIRES" => {
     "File::Spec" => 0,
     "IO::Handle" => 0,
     "IPC::Open3" => 0,
     "Test::More" => "0.98"
   },
-  "VERSION" => "0.71",
+  "VERSION" => "0.72",
   "test" => {
     "TESTS" => "t/*.t"
   }
@@ -38,7 +40,8 @@ my %FallbackPrereqs = (
   "File::Spec" => 0,
   "IO::Handle" => 0,
   "IPC::Open3" => 0,
-  "Test::More" => "0.98"
+  "Test::More" => "0.98",
+  "experimental" => 0
 );
 
 
