@@ -54,7 +54,7 @@
          "web" : "https://github.com/sharyanto/perl-Getopt-Long-Util"
       }
    },
-   "version" : "0.73",
+   "version" : "0.74",
    "x_Dist_Zilla" : {
       "perl" : {
          "version" : "5.018001"
