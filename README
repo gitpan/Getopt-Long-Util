@@ -2,8 +2,8 @@ NAME
     Getopt::Long::Util - Utilities for Getopt::Long
 
 VERSION
-    This document describes version 0.74 of Getopt::Long::Util (from Perl
-    distribution Getopt-Long-Util), released on 2014-07-09.
+    This document describes version 0.75 of Getopt::Long::Util (from Perl
+    distribution Getopt-Long-Util), released on 2014-07-23.
 
 FUNCTIONS
   parse_getopt_long_opt_spec($str) => hash

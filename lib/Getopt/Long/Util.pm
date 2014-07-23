@@ -5,8 +5,8 @@ use strict;
 use warnings;
 use experimental 'smartmatch';
 
-our $DATE = '2014-07-09'; # DATE
-our $VERSION = '0.74'; # VERSION
+our $DATE = '2014-07-23'; # DATE
+our $VERSION = '0.75'; # VERSION
 
 require Exporter;
 our @ISA       = qw(Exporter);
@@ -100,12 +100,19 @@ sub humanize_getopt_long_opt_spec {
     my $parse = parse_getopt_long_opt_spec($optspec)
         or die "Can't parse opt spec $optspec";
 
+    # put long name first (--help before -h) & letter first (-h before -?)
+    my @opts = sort {
+        (length($a) >1 ? 0:1) <=> (length($b) >1 ? 0:1) ||
+            ($a =~ /\A[A-Za-z]/ ? 0:1) <=> ($b =~ /\A[A-Za-z]/ ? 0:1) ||
+                $a cmp $b
+    } @{ $parse->{opts} };
+
     my $res = '';
     my $i = 0;
-    for (@{ $parse->{opts} }) {
+    for (@opts) {
         $i++;
         $res .= ", " if length($res);
-        if ($parse->{is_neg}) {
+        if ($parse->{is_neg} && length($_) > 1) {
             $res .= "--(no)$_";
         } else {
             if (length($_) > 1) {
@@ -133,7 +140,7 @@ Getopt::Long::Util - Utilities for Getopt::Long
 
 =head1 VERSION
 
-This document describes version 0.74 of Getopt::Long::Util (from Perl distribution Getopt-Long-Util), released on 2014-07-09.
+This document describes version 0.75 of Getopt::Long::Util (from Perl distribution Getopt-Long-Util), released on 2014-07-23.
 
 =head1 FUNCTIONS
 
