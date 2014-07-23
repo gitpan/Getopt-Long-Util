@@ -2,22 +2,24 @@ NAME
     Getopt::Long::Util - Utilities for Getopt::Long
 
 VERSION
-    This document describes version 0.76 of Getopt::Long::Util (from Perl
+    This document describes version 0.77 of Getopt::Long::Util (from Perl
     distribution Getopt-Long-Util), released on 2014-07-23.
 
 FUNCTIONS
   parse_getopt_long_opt_spec($str) => hash
     Parse Getopt::Long option specification. Will produce a hash with some
-    keys: "opts" (array of option names), "type" (string, type name),
-    "desttype" (either '', or '@' or '%'), "is_neg" (true for "--opt!"),
-    "is_inc" (true for "--opt+"), "min_vals" (int, usually 0 or 1),
-    "max_vals" (int, usually 0 or 1 except for option that requires multiple
-    values), "normalized" (string, normalized form of $str: '--' prefix will
-    be stripped, options will be sorted). Will return undef if it can't
-    parse $str. Examples:
+    keys: "opts" (array of option names, in the order specified in the opt
+    spec), "type" (string, type name), "desttype" (either '', or '@' or
+    '%'), "is_neg" (true for "--opt!"), "is_inc" (true for "--opt+"),
+    "min_vals" (int, usually 0 or 1), "max_vals" (int, usually 0 or 1 except
+    for option that requires multiple values),
 
-     $res = parse_getopt_long_opt_spec('help|h|?'); # {opts=>['?','h','help'], type=>undef, num_vals=>1}
-     $res = parse_getopt_long_opt_spec('--foo=s');  # {opts=>['foo'], type=>'s', num_vals=>1}
+    Will return undef if it can't parse $str.
+
+    Examples:
+
+     $res = parse_getopt_long_opt_spec('help|h|?'); # {opts=>['help', 'h', '?'], type=>undef}
+     $res = parse_getopt_long_opt_spec('--foo=s');  # {opts=>['foo'], type=>'s', min_vals=>1, max_vals=>1}
 
   humanize_getopt_long_opt_spec($str) => str
     Convert Getopt::Long option specification like "help|h|?" or <--foo=s>
