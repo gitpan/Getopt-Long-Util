@@ -6,7 +6,7 @@ use warnings;
 use experimental 'smartmatch';
 
 our $DATE = '2014-07-23'; # DATE
-our $VERSION = '0.75'; # VERSION
+our $VERSION = '0.76'; # VERSION
 
 require Exporter;
 our @ISA       = qw(Exporter);
@@ -63,7 +63,13 @@ sub parse_getopt_long_opt_spec {
             next if $_ ~~ @als;
             push @als, $_;
         }
-        $res{opts} = [$res{name}, @als];
+        $res{opts} = [sort {
+            # put long name first (--help before -h)
+            (length($a) >1 ? 0:1) <=> (length($b) >1 ? 0:1) ||
+                # put letter first (-h before -?)
+                ($a =~ /\A[A-Za-z]/ ? 0:1) <=> ($b =~ /\A[A-Za-z]/ ? 0:1) ||
+                    $a cmp $b
+                } $res{name}, @als];
     } else {
         $res{opts} = [$res{name}];
     }
@@ -75,12 +81,7 @@ sub parse_getopt_long_opt_spec {
 
     $res{normalized} = join(
         "",
-        join("|", sort {
-            # we sort but put alphanumeric option first
-            my $a_is_alpha = $a =~ /^[A-Za-z0-9]/ ? 1:0;
-            my $b_is_alpha = $b =~ /^[A-Za-z0-9]/ ? 1:0;
-            $b_is_alpha <=> $a_is_alpha || $a cmp $b;
-        } @{ $res{opts} }),
+        join("|", @{ $res{opts} }),
         ($res{is_neg} ? "!" : $res{is_inc} ? "+" : ""),
         ($res{type} ? ("=", $res{type}, $res{desttype},
                        (defined($res{max_vals}) ? (defined($res{min_vals}) ? "{$res{min_vals},$res{max_vals}}" : "{$res{max_vals}}") : ())) : ()),
@@ -100,16 +101,9 @@ sub humanize_getopt_long_opt_spec {
     my $parse = parse_getopt_long_opt_spec($optspec)
         or die "Can't parse opt spec $optspec";
 
-    # put long name first (--help before -h) & letter first (-h before -?)
-    my @opts = sort {
-        (length($a) >1 ? 0:1) <=> (length($b) >1 ? 0:1) ||
-            ($a =~ /\A[A-Za-z]/ ? 0:1) <=> ($b =~ /\A[A-Za-z]/ ? 0:1) ||
-                $a cmp $b
-    } @{ $parse->{opts} };
-
     my $res = '';
     my $i = 0;
-    for (@opts) {
+    for (@{ $parse->{opts} }) {
         $i++;
         $res .= ", " if length($res);
         if ($parse->{is_neg} && length($_) > 1) {
@@ -140,7 +134,7 @@ Getopt::Long::Util - Utilities for Getopt::Long
 
 =head1 VERSION
 
-This document describes version 0.75 of Getopt::Long::Util (from Perl distribution Getopt-Long-Util), released on 2014-07-23.
+This document describes version 0.76 of Getopt::Long::Util (from Perl distribution Getopt-Long-Util), released on 2014-07-23.
 
 =head1 FUNCTIONS
 
