@@ -5,8 +5,8 @@ use strict;
 use warnings;
 use experimental 'smartmatch';
 
-our $DATE = '2014-07-23'; # DATE
-our $VERSION = '0.77'; # VERSION
+our $DATE = '2014-12-09'; # DATE
+our $VERSION = '0.78'; # VERSION
 
 require Exporter;
 our @ISA       = qw(Exporter);
@@ -115,7 +115,7 @@ Getopt::Long::Util - Utilities for Getopt::Long
 
 =head1 VERSION
 
-This document describes version 0.77 of Getopt::Long::Util (from Perl distribution Getopt-Long-Util), released on 2014-07-23.
+This document describes version 0.78 of Getopt::Long::Util (from Perl distribution Getopt-Long-Util), released on 2014-12-09.
 
 =head1 FUNCTIONS
 
@@ -146,6 +146,14 @@ help/usage text.
 
 L<Getopt::Long>
 
+L<Getopt::Long::Spec>, which can also parse Getopt::Long spec into hash as well
+as transform back the hash to Getopt::Long spec. OO interface. I should've found
+this module first before writing my own C<parse_getopt_long_opt_spec()>. But at
+least currently C<parse_getopt_long_opt_spec()> is at least about 30-100+%
+faster than Getopt::Long::Spec::Parser, has a much simpler implementation (a
+single regex match), and can handle valid Getopt::Long specs that
+Getopt::Long::Spec::Parser fails to parse, e.g. C<foo|f=s@>.
+
 =head1 HOMEPAGE
 
 Please visit the project's homepage at L<https://metacpan.org/release/Getopt-Long-Util>.
@@ -164,11 +172,11 @@ feature.
 
 =head1 AUTHOR
 
-Steven Haryanto <stevenharyanto@gmail.com>
+perlancar <perlancar@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2014 by Steven Haryanto.
+This software is copyright (c) 2014 by perlancar@cpan.org.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
