@@ -2,8 +2,8 @@ NAME
     Getopt::Long::Util - Utilities for Getopt::Long
 
 VERSION
-    This document describes version 0.78 of Getopt::Long::Util (from Perl
-    distribution Getopt-Long-Util), released on 2014-12-09.
+    This document describes version 0.79 of Getopt::Long::Util (from Perl
+    distribution Getopt-Long-Util), released on 2014-12-21.
 
 FUNCTIONS
   parse_getopt_long_opt_spec($str) => hash
@@ -26,6 +26,53 @@ FUNCTIONS
     or "debug!" into, respectively, "--help, -h, -?" or "--foo=s" or
     "--(no)debug". Will die if can't parse $str. The output is suitable for
     including in help/usage text.
+
+  detect_getopt_long_script(%args) => envres
+  detect_getopt_long_script(%args) -> [status, msg, result, meta]
+    Detect whether a file is a Getopt::Long-based CLI script.
+
+    The criteria are:
+
+    *   the file must exist and readable;
+
+    *   (optional, if "include_noexec" is false) file must have its
+        executable mode bit set;
+
+    *   content must start with a shebang "#!";
+
+    *   either: must be perl script (shebang line contains 'perl') and must
+        contain something like "use Getopt::Long";
+
+    Arguments ('*' denotes required arguments):
+
+    *   filename => *str*
+
+        Path to file to be checked.
+
+        Either "filename" or "string" must be specified.
+
+    *   include_noexec => *bool* (default: 1)
+
+        Include scripts that do not have +x mode bit set.
+
+    *   string => *buf*
+
+        Path to file to be checked.
+
+        Either "file" or "string" must be specified.
+
+    Return value:
+
+    Returns an enveloped result (an array).
+
+    First element (status) is an integer containing HTTP status code (200
+    means OK, 4xx caller error, 5xx function error). Second element (msg) is
+    a string containing error message, or 'OK' if status is 200. Third
+    element (result) is optional, the actual result. Fourth element (meta)
+    is called result metadata and is optional, a hash that contains extra
+    information.
+
+     (any)
 
 SEE ALSO
     Getopt::Long
